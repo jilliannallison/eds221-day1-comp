@@ -1,0 +1,51 @@
+---
+title: "Toolik Lake Cholorphyll"
+format: html
+editor: visual
+execute:
+  echo: true
+  warning: false
+---
+
+```{r include = FALSE}
+library(tidyverse)
+library(janitor)
+library(here)
+```
+
+### Read in data and fix NA's %\>% (and THENN) clean names
+
+Read_csv, here(), and clean_names()
+
+```{r}
+toolik_chlorophyll <- read_csv(here::here("data",
+                                          "data-raw",
+                                          "toolik_chlorophyll.csv"), 
+                               na = c(".","NA")) %>% # WE CAN SET CERTAIN CHARACTERS TO NA! 
+  clean_names() 
+```
+
+```{r}
+skim(toolik_chlorophyll)
+```
+
+### Create a ggplot! 
+
+```{r}
+chlorophyll_pprod_graph <- ggplot(data = toolik_chlorophyll,
+                                  aes(x = active_chl_a_ug_l, 
+                                      y = pprod_mg_available_c_m3_d)) + 
+  geom_point()
+
+chlorophyll_pprod_graph
+```
+
+### Export plot as png using ggsave() and here() 
+
+```{r}
+ggsave(plot = chlorophyll_pprod_graph, # not necessary 
+       here::here("figs","chlorophyll_pprod_graph.png"), # saying where to save it
+       width = 8, 
+       height = 8, 
+       dpi = 200) # dimensions
+```
