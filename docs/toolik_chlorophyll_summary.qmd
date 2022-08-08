@@ -11,6 +11,7 @@ execute:
 library(tidyverse)
 library(janitor)
 library(here)
+library(skimr)
 ```
 
 ### Read in data and fix NA's %\>% (and THENN) clean names
